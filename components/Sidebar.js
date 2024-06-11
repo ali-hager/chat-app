@@ -1,6 +1,8 @@
+import { auth } from "@/firebaseconfig";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { Avatar, Flex, IconButton, Text } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
+import { signOut } from "firebase/auth";
 
 const Chat = () => {
   return (
@@ -15,6 +17,7 @@ export default function Sidebar() {
   return (
     <Flex
       // bg="blue.100"
+      h="100%"
       w="300px"
       borderEnd="1px solid"
       borderColor="gray.200"
@@ -34,7 +37,12 @@ export default function Sidebar() {
           <Avatar src="" marginEnd={3} />
           <Text>Albert Einstein</Text>
         </Flex>
-        <IconButton size="sm" isRound icon={<ArrowLeftIcon />} />
+        <IconButton
+          size="sm"
+          isRound
+          icon={<ArrowLeftIcon />}
+          onClick={() => signOut(auth)}
+        />
       </Flex>
 
       <Button m={5} p={4}>

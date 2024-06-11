@@ -1,6 +1,8 @@
+import Sidebar from "@/components/Sidebar";
 import Head from "next/head";
 // import { Inter } from "next/font/google";
 // const inter = Inter({ subsets: ["latin"] });
+import { Box } from "@chakra-ui/react";
 
 export default function Home() {
   return (
@@ -11,6 +13,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Box h="100vh">
+        <Sidebar />
+      </Box>
     </>
   );
 }
