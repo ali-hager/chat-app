@@ -3,17 +3,40 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { Avatar, Flex, IconButton, Text } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { signOut } from "firebase/auth";
-
-const Chat = () => {
-  return (
-    <Flex p={3} align="center" _hover={{ bg: "gray.100", cursor: "pointer" }}>
-      <Avatar src="" marginEnd={3} />
-      <Text>user@gmail.com</Text>
-    </Flex>
-  );
-};
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collection } from "firebase/firestore";
+import { db } from "@/firebaseconfig";
+import getOtherEmail from "./utls/getOtherEmail";
+import { useRouter } from "next/router";
 
 export default function Sidebar() {
+  const [user] = useAuthState(auth);
+  const [snapshot, loading, error] = useCollection(collection(db, "chats"));
+  const chats = snapshot?.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const router = useRouter();
+
+  const redirect = (id) => {
+    router.push(`/chat/${id}`);
+  };
+
+  const chatList = () => {
+    return chats
+      ?.filter((chat) => chat.users.includes(user.email))
+      .map((chat) => (
+        <Flex
+          key={Math.random()}
+          p={3}
+          align="center"
+          _hover={{ bg: "gray.100", cursor: "pointer" }}
+          onClick={() => redirect(chat.id)}
+        >
+          <Avatar src="" marginEnd={3} />
+          <Text>{getOtherEmail(chat.users, user)}</Text>
+        </Flex>
+      ));
+  };
+
   return (
     <Flex
       // bg="blue.100"
@@ -34,8 +57,8 @@ export default function Sidebar() {
         p={3}
       >
         <Flex align="center">
-          <Avatar src="" marginEnd={3} />
-          <Text>Albert Einstein</Text>
+          <Avatar src={user.photoURL} marginEnd={3} />
+          <Text>{user.displayName}</Text>
         </Flex>
         <IconButton
           size="sm"
@@ -54,31 +77,7 @@ export default function Sidebar() {
         sx={{ scrollbarWidth: "none" }}
         flex={1}
       >
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
-        <Chat />
+        {chatList()}
       </Flex>
     </Flex>
   );
