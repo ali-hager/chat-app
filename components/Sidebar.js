@@ -5,7 +5,7 @@ import { Button } from "@chakra-ui/react";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { collection } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/firebaseconfig";
 import getOtherEmail from "./utls/getOtherEmail";
 import { useRouter } from "next/router";
@@ -18,6 +18,18 @@ export default function Sidebar() {
 
   const redirect = (id) => {
     router.push(`/chat/${id}`);
+  };
+
+  const chatExists = (email) =>
+    chats?.find(
+      (chat) => chat.users.includes(user.email) && chat.users.includes(email)
+    );
+
+  const newChat = async () => {
+    const input = prompt("Enter email of chat recipient");
+    if (!chatExists(input)) {
+      await addDoc(collection(db, "chats"), { users: [user.email, input] });
+    }
   };
 
   const chatList = () => {
@@ -68,7 +80,7 @@ export default function Sidebar() {
         />
       </Flex>
 
-      <Button m={5} p={4}>
+      <Button m={5} p={4} onClick={() => newChat()}>
         New Chat
       </Button>
       <Flex
