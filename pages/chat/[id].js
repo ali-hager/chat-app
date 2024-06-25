@@ -58,18 +58,6 @@ export default function Chat() {
       );
     });
 
-  // useEffect(
-  //   () =>
-  //     setTimeout(
-  //       bottomOfChat.current.scrollbarWidth({
-  //         behavior: "smooth",
-  //         block: "start",
-  //       }),
-  //       100
-  //     ),
-  //   [messages]
-  // );
-
   return (
     <Flex h="100vh">
       <Head>
@@ -89,6 +77,7 @@ export default function Chat() {
           sx={{ scrollbarWidth: "none" }}
         >
           {getMessages()}
+          <div ref={bottomOfChat}></div>
         </Flex>
         <Bottombar id={id} user={user} />
       </Flex>
