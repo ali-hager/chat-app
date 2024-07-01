@@ -1,4 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Overview
+
+This is a fullstack chat application built using modern web technologies:
+
+- **ReactJS**: For building the user interface.
+- **Firebase v9**: For backend services including authentication, real-time database, and hosting.
+- **ChakraUI**: For a sleek and accessible UI component library.
+- **NextJS**: For server-side rendering and optimized performance.
+
+The application supports login authentication using Google Sign-In, providing a seamless and secure way for users to access the chat platform.
+
+## Site Display
+
+### Login Authentication with Google
+![Login with Google](https://github.com/ali-hager/chat-app/assets/156130068/f8535048-7d35-49ef-b08b-dc67d688b293)
+
+### Chat Area
+![Chat Area](https://github.com/ali-hager/chat-app/assets/156130068/f53b544f-3f42-4d69-aafb-63d7630d85ba)
+
+
+### Sending Chats
+![Sending Chats](https://github.com/ali-hager/chat-app/assets/156130068/01355f6f-3fd8-4908-97c4-93c55d8289d6)
+
 
 ## Getting Started
 
